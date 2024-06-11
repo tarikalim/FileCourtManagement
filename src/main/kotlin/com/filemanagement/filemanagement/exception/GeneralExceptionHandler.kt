@@ -33,4 +33,10 @@ class GeneralExceptionHandler : ResponseEntityExceptionHandler() {
     fun handleUserNotFoundException(exception: UserNotFoundException): ResponseEntity<String> {
         return ResponseEntity(exception.message, HttpStatus.NOT_FOUND)
     }
+
+    @ExceptionHandler(IllegalArgumentException::class)
+    fun handleIllegalArgumentException(exception: IllegalArgumentException): ResponseEntity<String> {
+        return ResponseEntity(exception.message, HttpStatus.BAD_REQUEST)
+    }
+
 }

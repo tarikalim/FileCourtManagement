@@ -42,6 +42,12 @@ class UserService(
 
 
     fun createUser(createUserDTO: CreateUserDTO): UserDTO {
+        if (userRepository.findByUsername(createUserDTO.username) != null ) {
+            throw IllegalArgumentException("Username already exists")
+        }
+        if (userRepository.findByRole(Role.VACATION).isNotEmpty()) {
+            throw IllegalArgumentException("There is already a user on vacation")
+        }
         val user = userMapper.fromCreateDTO(createUserDTO)
         val savedUser = userRepository.save(user)
         return userMapper.toDTO(savedUser)

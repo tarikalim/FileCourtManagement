@@ -3,6 +3,7 @@ package com.filemanagement.filemanagement.controller
 import com.filemanagement.filemanagement.dto.CreateUserDTO
 import com.filemanagement.filemanagement.dto.UserDTO
 import com.filemanagement.filemanagement.service.UserService
+import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -16,15 +17,20 @@ class UserController(
     @GetMapping
     fun getAllUsers(): List<UserDTO> = userService.getAllUsers()
 
+    @GetMapping("/rotate")
+    fun rotateUserRoles() {
+        userService.rotateUserRoles()
+    }
+
 
     @GetMapping("/{id}")
     fun getUserById(@PathVariable id: Long): ResponseEntity<UserDTO> {
         val user = userService.getUserById(id)
-        return ResponseEntity.ok(user)
+        return ResponseEntity(user, HttpStatus.OK)
     }
 
     @PostMapping
-    fun createUser(@RequestBody createUserDTO: CreateUserDTO): ResponseEntity<UserDTO> {
+    fun createUser(@Valid @RequestBody createUserDTO: CreateUserDTO): ResponseEntity<UserDTO> {
         val user = userService.createUser(createUserDTO)
         return ResponseEntity(user, HttpStatus.CREATED)
     }
