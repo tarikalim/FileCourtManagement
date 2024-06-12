@@ -38,5 +38,9 @@ class GeneralExceptionHandler : ResponseEntityExceptionHandler() {
     fun handleIllegalArgumentException(exception: IllegalArgumentException): ResponseEntity<String> {
         return ResponseEntity(exception.message, HttpStatus.BAD_REQUEST)
     }
+    @ExceptionHandler(FileNotFoundException::class)
+    fun handleFileNotFoundException(exception: FileNotFoundException): ResponseEntity<String> {
+        return ResponseEntity(exception.message, HttpStatus.NOT_FOUND)
+    }
 
 }
