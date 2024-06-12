@@ -1,6 +1,7 @@
 package com.filemanagement.filemanagement.service
 
 import com.filemanagement.filemanagement.dto.AddFileDTO
+import com.filemanagement.filemanagement.dto.FileDTO
 import com.filemanagement.filemanagement.dto.FileMapper
 import com.filemanagement.filemanagement.dto.UserFileDTO
 import com.filemanagement.filemanagement.repository.FileRepository
@@ -23,6 +24,10 @@ class FileService(
     fun getFileById(id: Long): UserFileDTO {
         val file = findFileById(id)
         return fileMapper.toUserFileDTO(file)
+    }
+    fun getFilesByUserId(userId: Long): List<FileDTO>{
+        val user = userService.findUserById(userId)
+        return fileRepository.findByUserId(user.id).map(fileMapper::toBasicDTO)
     }
 
 

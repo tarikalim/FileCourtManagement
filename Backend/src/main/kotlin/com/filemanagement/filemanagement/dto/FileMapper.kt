@@ -39,6 +39,12 @@ class FileMapper {
             user = user
         )
     }
+    fun toBasicDTO(file: File): FileDTO {
+        return FileDTO(
+            id = file.id,
+            filename = file.filename
+        )
+    }
 
     // File entity to AddFileDTO for createFile method response
     fun toAddDTO(file: File): AddFileDTO {
