@@ -5,6 +5,7 @@ import com.filemanagement.filemanagement.dto.UserDTO
 import com.filemanagement.filemanagement.dto.UserMapper
 import com.filemanagement.filemanagement.exception.UserNotFoundException
 import com.filemanagement.filemanagement.model.Role
+import com.filemanagement.filemanagement.model.User
 import com.filemanagement.filemanagement.repository.UserRepository
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
@@ -36,16 +37,15 @@ class UserService(
     fun getAllUsers(): List<UserDTO> = userRepository.findAll().map(userMapper::toDTO)
 
     fun getUserById(id: Long): UserDTO {
-        val user = userRepository.findById(id).orElseThrow { UserNotFoundException("User not found with id: $id") }
+        val user = findUserById(id)
         return userMapper.toDTO(user)
     }
 
-
     fun createUser(createUserDTO: CreateUserDTO): UserDTO {
-        if (userRepository.findByUsername(createUserDTO.username) != null ) {
+        if (userRepository.findByUsername(createUserDTO.username) != null) {
             throw IllegalArgumentException("Username already exists")
         }
-        if (userRepository.findByRole(Role.VACATION).isNotEmpty()) {
+        if (findUserByRole(Role.VACATION).isNotEmpty()) {
             throw IllegalArgumentException("There is already a user on vacation")
         }
         val user = userMapper.fromCreateDTO(createUserDTO)
@@ -58,5 +58,16 @@ class UserService(
             throw UserNotFoundException("User not found with id: $id")
         }
         userRepository.deleteById(id)
+    }
+
+    fun findUserByRole(role: Role): List<UserDTO> {
+        return userRepository.findByRole(role).map(userMapper::toDTO)
+    }
+
+    internal fun findUserById(id: Long): User {
+        return userRepository.findById(id).orElseThrow { UserNotFoundException("User not found with id: $id") }
+    }
+    internal fun getAllAvailableUsers(): List<User> {
+        return userRepository.findByRole(Role.NORMAL)
     }
 }

@@ -17,10 +17,10 @@ class UserController(
     @GetMapping
     fun getAllUsers(): List<UserDTO> = userService.getAllUsers()
 
-    @GetMapping("/rotate")
-    fun rotateUserRoles() {
-        userService.rotateUserRoles()
-    }
+    /*    @GetMapping("/rotate")
+        fun rotateUserRoles() {
+            userService.rotateUserRoles()
+        }*/
 
 
     @GetMapping("/{id}")
@@ -40,6 +40,7 @@ class UserController(
         userService.deleteUser(id)
         return ResponseEntity.noContent().build()
     }
+
 
 }
 
