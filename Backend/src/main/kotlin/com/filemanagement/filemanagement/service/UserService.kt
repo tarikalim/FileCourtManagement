@@ -8,14 +8,27 @@ import com.filemanagement.filemanagement.model.Role
 import com.filemanagement.filemanagement.model.User
 import com.filemanagement.filemanagement.repository.UserRepository
 import org.springframework.scheduling.annotation.Scheduled
+import org.springframework.security.core.userdetails.UserDetails
+import org.springframework.security.core.userdetails.UserDetailsService
+import org.springframework.security.crypto.bcrypt.BCrypt
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
 class UserService(
     private val userRepository: UserRepository,
-    private val userMapper: UserMapper
-) {
+    private val userMapper: UserMapper,
+    private val bCryptPasswordEncoder: BCryptPasswordEncoder
+): UserDetailsService {
+    override fun loadUserByUsername(username: String?): UserDetails {
+        val user = findUserByUsername(username!!)
+        return org.springframework.security.core.userdetails.User(user.username, user.password, emptyList())
+
+    }
+    internal fun findUserByUsername(username: String): User {
+        return userRepository.findByUsername(username) ?: throw UserNotFoundException("User not found with username: $username")
+    }
 
     @Scheduled(cron = "0 0 0 * * MON")
     @Transactional
@@ -45,10 +58,11 @@ class UserService(
         if (userRepository.findByUsername(createUserDTO.username) != null) {
             throw IllegalArgumentException("Username already exists")
         }
-        if (findUserByRole(Role.VACATION).isNotEmpty()) {
+        if (findUserByRole(Role.VACATION).isNotEmpty() && createUserDTO.role == Role.VACATION) {
             throw IllegalArgumentException("There is already a user on vacation")
         }
         val user = userMapper.fromCreateDTO(createUserDTO)
+        user.password = bCryptPasswordEncoder.encode(user.password)
         val savedUser = userRepository.save(user)
         return userMapper.toDTO(savedUser)
     }
@@ -67,7 +81,10 @@ class UserService(
     internal fun findUserById(id: Long): User {
         return userRepository.findById(id).orElseThrow { UserNotFoundException("User not found with id: $id") }
     }
+
     internal fun getAllAvailableUsers(): List<User> {
         return userRepository.findByRole(Role.NORMAL)
     }
+
+
 }
