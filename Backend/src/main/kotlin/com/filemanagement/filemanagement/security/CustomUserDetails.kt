@@ -24,19 +24,5 @@ class CustomUserDetails(
         return username
     }
 
-    override fun isAccountNonExpired(): Boolean {
-        return true
-    }
 
-    override fun isAccountNonLocked(): Boolean {
-        return true
-    }
-
-    override fun isCredentialsNonExpired(): Boolean {
-        return true
-    }
-
-    override fun isEnabled(): Boolean {
-        return true
-    }
 }
