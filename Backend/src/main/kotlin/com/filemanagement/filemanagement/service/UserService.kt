@@ -7,10 +7,10 @@ import com.filemanagement.filemanagement.exception.UserNotFoundException
 import com.filemanagement.filemanagement.model.Role
 import com.filemanagement.filemanagement.model.User
 import com.filemanagement.filemanagement.repository.UserRepository
+import com.filemanagement.filemanagement.security.CustomUserDetails
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
-import org.springframework.security.crypto.bcrypt.BCrypt
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -20,14 +20,20 @@ class UserService(
     private val userRepository: UserRepository,
     private val userMapper: UserMapper,
     private val bCryptPasswordEncoder: BCryptPasswordEncoder
-): UserDetailsService {
+) : UserDetailsService {
     override fun loadUserByUsername(username: String?): UserDetails {
         val user = findUserByUsername(username!!)
-        return org.springframework.security.core.userdetails.User(user.username, user.password, emptyList())
-
+        return CustomUserDetails(
+            user.id,
+            user.username,
+            user.password,
+            user.role
+        )
     }
+
     internal fun findUserByUsername(username: String): User {
-        return userRepository.findByUsername(username) ?: throw UserNotFoundException("User not found with username: $username")
+        return userRepository.findByUsername(username)
+            ?: throw UserNotFoundException("User not found with username: $username")
     }
 
     @Scheduled(cron = "0 0 0 * * MON")
@@ -85,6 +91,4 @@ class UserService(
     internal fun getAllAvailableUsers(): List<User> {
         return userRepository.findByRole(Role.NORMAL)
     }
-
-
 }

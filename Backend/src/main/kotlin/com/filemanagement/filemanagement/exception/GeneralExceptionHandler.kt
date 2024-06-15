@@ -1,9 +1,11 @@
 package com.filemanagement.filemanagement.exception
 
+
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.HttpStatusCode
 import org.springframework.http.ResponseEntity
+import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.validation.FieldError
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
@@ -38,9 +40,15 @@ class GeneralExceptionHandler : ResponseEntityExceptionHandler() {
     fun handleIllegalArgumentException(exception: IllegalArgumentException): ResponseEntity<String> {
         return ResponseEntity(exception.message, HttpStatus.BAD_REQUEST)
     }
+
     @ExceptionHandler(FileNotFoundException::class)
     fun handleFileNotFoundException(exception: FileNotFoundException): ResponseEntity<String> {
         return ResponseEntity(exception.message, HttpStatus.NOT_FOUND)
     }
+    @ExceptionHandler(UsernameNotFoundException::class)
+    fun handleUsernameNotFoundException(exception: UsernameNotFoundException): ResponseEntity<String> {
+        return ResponseEntity(exception.message, HttpStatus.NOT_FOUND)
+    }
+
 
 }

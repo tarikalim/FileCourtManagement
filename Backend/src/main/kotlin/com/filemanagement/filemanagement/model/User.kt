@@ -13,6 +13,8 @@ data class User(
     val files: List<File> = mutableListOf()
 )
 
-enum class Role {
-    NORMAL,VACATION
+enum class Role(val roleName: String) {
+    NORMAL("ROLE_NORMAL"),
+    VACATION("ROLE_VACATION");
 }
+
