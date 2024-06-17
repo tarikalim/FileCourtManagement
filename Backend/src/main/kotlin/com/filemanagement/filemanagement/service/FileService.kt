@@ -8,7 +8,6 @@ import com.filemanagement.filemanagement.repository.FileRepository
 import org.springframework.stereotype.Service
 import com.filemanagement.filemanagement.exception.FileNotFoundException
 import com.filemanagement.filemanagement.model.File
-import org.apache.catalina.User
 
 @Service
 class FileService(

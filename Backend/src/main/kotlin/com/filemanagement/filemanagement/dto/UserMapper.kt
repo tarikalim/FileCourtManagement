@@ -23,11 +23,4 @@ class UserMapper {
         )
     }
 
-    fun fromUpdateDTO(dto: UpdateUserDTO, user: User): User {
-        return user.copy(
-            username = dto.username ?: user.username,
-            password = dto.password ?: user.password,
-            role = dto.role ?: user.role
-        )
-    }
 }

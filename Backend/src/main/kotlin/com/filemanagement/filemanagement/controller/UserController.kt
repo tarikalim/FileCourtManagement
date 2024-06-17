@@ -9,7 +9,6 @@ import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import kotlin.reflect.jvm.internal.impl.descriptors.Visibilities.Private
 
 @RestController
 @RequestMapping("/users")
