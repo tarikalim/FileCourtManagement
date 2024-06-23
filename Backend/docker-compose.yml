@@ -17,17 +17,12 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: backend_container
-    environment:
-      SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
-      SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
-      SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
-      SECRET_KEY: ${SECRET_KEY}
+
     ports:
       - "8080:8080"
     depends_on:
       - mysql
-    env_file:
-      - .env
+
 
 volumes:
   mysql-data:

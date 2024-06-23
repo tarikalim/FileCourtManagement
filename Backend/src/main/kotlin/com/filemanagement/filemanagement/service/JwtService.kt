@@ -15,9 +15,8 @@ class JwtService {
     @Value("\${secret.key}")
     private lateinit var secret: String
 
-    fun generateToken(userName: String, userId: String): String {
+    fun generateToken(userName: String): String {
         val claims: MutableMap<String, Any> = HashMap()
-        claims["userId"] = userId
         return createToken(claims, userName)
     }
 
@@ -45,14 +44,6 @@ class JwtService {
         return claims.subject
     }
 
-    fun extractUserId(token: String): String {
-        val claims = Jwts.parserBuilder()
-            .setSigningKey(getSignKey())
-            .build()
-            .parseClaimsJws(token)
-            .body
-        return claims["userId"] as String
-    }
 
     private fun createToken(claims: Map<String, Any>, userName: String): String {
         return Jwts.builder()

@@ -24,7 +24,7 @@ class AuthenticationController(
         authenticationManager.authenticate(authenticationToken)
 
         val userDetails = userService.loadUserByUsername(authDTO.username) as CustomUserDetails
-        val jwtToken = jwtService.generateToken(userDetails.username, userDetails.id.toString())
+        val jwtToken = jwtService.generateToken(userDetails.username)
 
         return ResponseEntity.ok(jwtToken)
     }

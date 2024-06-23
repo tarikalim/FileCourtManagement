@@ -1,6 +1,7 @@
 package com.filemanagement.filemanagement.exception
 
 
+import io.jsonwebtoken.ExpiredJwtException
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.HttpStatusCode
@@ -56,7 +57,12 @@ class GeneralExceptionHandler : ResponseEntityExceptionHandler() {
     fun handleBadCredentialsException(exception: BadCredentialsException): ResponseEntity<String> {
         return ResponseEntity(exception.message, HttpStatus.UNAUTHORIZED)
     }
-}
+    @ExceptionHandler(ExpiredJwtException::class)
+        fun handleExpiredJwtException(exception: ExpiredJwtException): ResponseEntity<String> {
+            return ResponseEntity(exception.message, HttpStatus.UNAUTHORIZED)
+        }
+    }
+
 
 
 
