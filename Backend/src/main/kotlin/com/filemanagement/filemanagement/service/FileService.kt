@@ -24,7 +24,8 @@ class FileService(
         val file = findFileById(id)
         return fileMapper.toUserFileDTO(file)
     }
-    fun getFilesByUserId(userId: Long): List<FileDTO>{
+
+    fun getFilesByUserId(userId: Long): List<FileDTO> {
         val user = userService.findUserById(userId)
         return fileRepository.findByUserId(user.id).map(fileMapper::toBasicDTO)
     }
@@ -38,7 +39,7 @@ class FileService(
     }
 
     fun createFile(addFileDTO: AddFileDTO): UserFileDTO {
-        if (fileRepository.findByFilename(addFileDTO.filename).isNotEmpty()) {
+        if (fileRepository.findByFilename(addFileDTO.filename) != null) {
             throw IllegalArgumentException("This file already in the system: ${addFileDTO.filename}")
         }
         val availableUsers = userService.getAllAvailableUsers()
@@ -51,6 +52,13 @@ class FileService(
         return fileMapper.toUserFileDTO(savedFile)
 
     }
+
+    fun findFileByFilename(filename: String): UserFileDTO {
+        val file = fileRepository.findByFilename(filename)
+            ?: throw FileNotFoundException("File not found with filename: $filename")
+        return fileMapper.toUserFileDTO(file)
+    }
+
 
 }
 
