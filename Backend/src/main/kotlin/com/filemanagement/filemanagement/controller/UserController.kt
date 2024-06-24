@@ -40,6 +40,11 @@ class UserController(
         val files = fileService.getFilesByUserId(id)
         return ResponseEntity(files, HttpStatus.OK)
     }
+    @GetMapping("/files/search")
+    fun getFilesByUserUsername(@RequestParam username: String): ResponseEntity<List<FileDTO>> {
+        val files = fileService.getFilesByUserUsername(username)
+        return ResponseEntity(files, HttpStatus.OK)
+    }
 
     @GetMapping("/me/files")
     fun getFilesByCurrentUser(@AuthenticationPrincipal userDetails: CustomUserDetails): ResponseEntity<List<FileDTO>> {

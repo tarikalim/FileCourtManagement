@@ -30,6 +30,11 @@ class FileService(
         return fileRepository.findByUserId(user.id).map(fileMapper::toBasicDTO)
     }
 
+    fun getFilesByUserUsername(username: String): List<FileDTO> {
+        val user = userService.findUserByUsername(username)
+        return getFilesByUserId(user.id)
+    }
+
 
     fun deleteFile(id: Long) {
         if (!fileRepository.existsById(id)) {

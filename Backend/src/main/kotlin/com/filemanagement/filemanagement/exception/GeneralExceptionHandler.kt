@@ -35,40 +35,39 @@ class GeneralExceptionHandler : ResponseEntityExceptionHandler() {
     }
 
     @ExceptionHandler(UserNotFoundException::class)
-    fun handleUserNotFoundException(exception: UserNotFoundException): ResponseEntity<String> {
-        return ResponseEntity(exception.message, HttpStatus.NOT_FOUND)
+    fun handleUserNotFoundException(exception: UserNotFoundException): ResponseEntity<Map<String, String?>> {
+        return ResponseEntity(mapOf("message" to exception.message), HttpStatus.NOT_FOUND)
     }
 
     @ExceptionHandler(IllegalArgumentException::class)
-    fun handleIllegalArgumentException(exception: IllegalArgumentException): ResponseEntity<String> {
-        return ResponseEntity(exception.message, HttpStatus.BAD_REQUEST)
+    fun handleIllegalArgumentException(exception: IllegalArgumentException): ResponseEntity<Map<String, String?>> {
+        return ResponseEntity(mapOf("message" to exception.message), HttpStatus.BAD_REQUEST)
     }
 
     @ExceptionHandler(FileNotFoundException::class)
-    fun handleFileNotFoundException(exception: FileNotFoundException): ResponseEntity<String> {
-        return ResponseEntity(exception.message, HttpStatus.NOT_FOUND)
+    fun handleFileNotFoundException(exception: FileNotFoundException): ResponseEntity<Map<String, String?>> {
+        return ResponseEntity(mapOf("message" to exception.message), HttpStatus.NOT_FOUND)
     }
 
     @ExceptionHandler(UsernameNotFoundException::class)
-    fun handleUsernameNotFoundException(exception: UsernameNotFoundException): ResponseEntity<String> {
-        return ResponseEntity(exception.message, HttpStatus.NOT_FOUND)
+    fun handleUsernameNotFoundException(exception: UsernameNotFoundException): ResponseEntity<Map<String, String?>> {
+        return ResponseEntity(mapOf("message" to exception.message), HttpStatus.NOT_FOUND)
     }
 
     @ExceptionHandler(BadCredentialsException::class)
-    fun handleBadCredentialsException(exception: BadCredentialsException): ResponseEntity<String> {
-        return ResponseEntity(exception.message, HttpStatus.UNAUTHORIZED)
+    fun handleBadCredentialsException(exception: BadCredentialsException): ResponseEntity<Map<String, String?>> {
+        return ResponseEntity(mapOf("message" to exception.message), HttpStatus.UNAUTHORIZED)
     }
 
     @ExceptionHandler(ExpiredJwtException::class)
-    fun handleExpiredJwtException(exception: ExpiredJwtException): ResponseEntity<String> {
-        return ResponseEntity("JWT expired", HttpStatus.UNAUTHORIZED)
+    fun handleExpiredJwtException(exception: ExpiredJwtException): ResponseEntity<Map<String, String?>> {
+        return ResponseEntity(mapOf("message" to "JWT expired"), HttpStatus.UNAUTHORIZED)
     }
 
     @ExceptionHandler(SignatureException::class)
-    fun handleSignatureException(exception: SignatureException): ResponseEntity<String> {
-        return ResponseEntity("Invalid JWT signature", HttpStatus.UNAUTHORIZED)
+    fun handleSignatureException(exception: SignatureException): ResponseEntity<Map<String, String?>> {
+        return ResponseEntity(mapOf("message" to "Invalid JWT signature"), HttpStatus.UNAUTHORIZED)
     }
-
 }
 
 
