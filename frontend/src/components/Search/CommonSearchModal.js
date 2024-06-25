@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Modal, Box, Typography, TextField, Button } from '@mui/material';
+import React, {useState} from 'react';
+import {Modal, Box, Typography, TextField, Button, List} from '@mui/material';
 
 const style = {
     position: 'absolute',
@@ -12,7 +12,13 @@ const style = {
     boxShadow: 24,
     p: 4,
 };
-const CommonSearchModal = ({ open, onClose, title, searchPlaceholder, searchFunction, renderItem }) => {
+
+const listStyle = {
+    maxHeight: 300,
+    overflow: 'auto',
+};
+
+const CommonSearchModal = ({open, onClose, title, searchPlaceholder, searchFunction, renderItem}) => {
     const [searchQuery, setSearchQuery] = useState('');
     const [error, setError] = useState('');
     const [results, setResults] = useState(null);
@@ -23,7 +29,7 @@ const CommonSearchModal = ({ open, onClose, title, searchPlaceholder, searchFunc
             setResults(response.data);
             setError('');
         } catch (error) {
-            setError(error.response.data.message || 'Not found');
+            setError(error.response?.data?.message || 'Not found');
             setResults(null);
         }
     };
@@ -50,14 +56,20 @@ const CommonSearchModal = ({ open, onClose, title, searchPlaceholder, searchFunc
                     Search
                 </Button>
                 {error && (
-                    <Typography color="error" variant="body2" style={{ marginTop: '10px' }}>
+                    <Typography color="error" variant="body2" style={{marginTop: '10px'}}>
                         {error}
                     </Typography>
                 )}
-                {results && (
-                    <Box mt={2}>
-                        {renderItem(results)}
-                    </Box>
+                {results && Array.isArray(results) ? (
+                    <List sx={listStyle}>
+                        {results.map((item) => renderItem(item))}
+                    </List>
+                ) : (
+                    results && (
+                        <Box mt={2}>
+                            {renderItem(results)}
+                        </Box>
+                    )
                 )}
             </Box>
         </Modal>
