@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
 import Login from './pages/Login';
 import Home from './pages/Home';
-import ProtectedRoute from './components/ProtectedRoute';
-import { setNavigate } from './utils/navigateWrapper';
+import ProtectedRoute from './services/ProtectedRoute';
+import { setNavigate } from './services/navigateWrapper';
 
 const AppRoutes = () => {
     const navigate = useNavigate();

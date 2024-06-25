@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {getNavigate} from '../utils/navigateWrapper';
+import {getNavigate} from './navigateWrapper';
 
 const api = axios.create({
     baseURL: 'http://localhost:8080', // Backend base URL
@@ -63,6 +63,9 @@ export const searchFileByFilename = (filename) => {
 export const searchFilesByUsername = (username) => {
     return api.get(`/users/files/search`, {params: {username}});
 };
+export const getAllCourts = () => {
+    return api.get('/users');
+}
 
 
 export default api;

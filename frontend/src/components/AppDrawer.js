@@ -1,21 +1,35 @@
-import React, { useState } from 'react';
-import { Drawer, List, ListItem, ListItemIcon, ListItemText, IconButton, AppBar, Toolbar, Typography, Box, Button } from '@mui/material';
+import React, {useState} from 'react';
+import {
+    Drawer,
+    List,
+    ListItem,
+    ListItemIcon,
+    ListItemText,
+    IconButton,
+    AppBar,
+    Toolbar,
+    Typography,
+    Box,
+    Button
+} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import FolderIcon from '@mui/icons-material/Folder';
 import ListIcon from '@mui/icons-material/List';
 import AddIcon from '@mui/icons-material/Add';
 import SearchIcon from '@mui/icons-material/Search';
-import { useNavigate } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import UserFilesModal from './UserFilesModal';
-import AllFilesModal from './AllFilesModal';
+import AllFilesModal from './List/AllFilesModal';
+import AllCourtsModal from "./List/AllCourtsModal";
 import AddFileModal from './AddFileModal';
-import SearchFileModal from './SearchFileModal';
-import SearchCourtModal from './SearchCourtModal';
+import SearchFileModal from './Search/SearchFileModal';
+import SearchCourtModal from './Search/SearchCourtModal';
 
 const AppDrawer = () => {
     const [drawerOpen, setDrawerOpen] = useState(false);
     const [userFilesModalOpen, setUserFilesModalOpen] = useState(false);
     const [allFilesModalOpen, setAllFilesModalOpen] = useState(false);
+    const [allCourtsModalOpen, setAllCourtsModalOpen] = useState(false);
     const [addFileModalOpen, setAddFileModalOpen] = useState(false);
     const [searchFileModalOpen, setSearchFileModalOpen] = useState(false);
     const [searchCourtModalOpen, setSearchCourtModalOpen] = useState(false);
@@ -42,6 +56,13 @@ const AppDrawer = () => {
 
     const handleAllFilesModalClose = () => {
         setAllFilesModalOpen(false);
+    };
+    const handleAllCourtsModalOpen = () => {
+        setAllCourtsModalOpen(true);
+    };
+
+    const handleAllCourtsModalClose = () => {
+        setAllCourtsModalOpen(false);
     };
 
     const handleAddFileModalOpen = () => {
@@ -73,11 +94,14 @@ const AppDrawer = () => {
     };
 
     const menuItems = [
-        { text: 'Assigned Files', icon: <FolderIcon />, onClick: handleUserFilesModalOpen },
-        { text: 'List All Files', icon: <ListIcon />, onClick: handleAllFilesModalOpen },
-        { text: 'Add File', icon: <AddIcon />, onClick: handleAddFileModalOpen },
-        { text: 'Search File', icon: <SearchIcon />, onClick: handleSearchFileModalOpen },
-        { text: 'Search Court', icon: <SearchIcon />, onClick: handleSearchCourtModalOpen },
+        {text: 'Assigned Files', icon: <FolderIcon/>, onClick: handleUserFilesModalOpen},
+        {text: 'List All Files', icon: <ListIcon/>, onClick: handleAllFilesModalOpen},
+        {text: 'List All Courts', icon: <ListIcon/>, onClick: handleAllCourtsModalOpen},
+        {text: 'Search File', icon: <SearchIcon/>, onClick: handleSearchFileModalOpen},
+        {text: 'Search Court', icon: <SearchIcon/>, onClick: handleSearchCourtModalOpen},
+        {text: 'Add File', icon: <AddIcon/>, onClick: handleAddFileModalOpen},
+
+
     ];
 
     return (
@@ -89,11 +113,11 @@ const AppDrawer = () => {
                         color="inherit"
                         aria-label="menu"
                         onClick={toggleDrawer(true)}
-                        sx={{ marginRight: 2 }}
+                        sx={{marginRight: 2}}
                     >
-                        <MenuIcon />
+                        <MenuIcon/>
                     </IconButton>
-                    <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
+                    <Typography variant="h6" noWrap component="div" sx={{flexGrow: 1}}>
                         Bakirkoy Court House File Automation System
                     </Typography>
                     <Button color="inherit" onClick={handleBackToLogin}>
@@ -107,7 +131,7 @@ const AppDrawer = () => {
                 onClose={toggleDrawer(false)}
             >
                 <Box
-                    sx={{ width: 250 }}
+                    sx={{width: 250}}
                     role="presentation"
                     onClick={toggleDrawer(false)}
                     onKeyDown={toggleDrawer(false)}
@@ -116,17 +140,19 @@ const AppDrawer = () => {
                         {menuItems.map((item, index) => (
                             <ListItem button key={index} onClick={item.onClick}>
                                 <ListItemIcon>{item.icon}</ListItemIcon>
-                                <ListItemText primary={item.text} />
+                                <ListItemText primary={item.text}/>
                             </ListItem>
                         ))}
                     </List>
                 </Box>
             </Drawer>
-            <UserFilesModal open={userFilesModalOpen} onClose={handleUserFilesModalClose} />
-            <AllFilesModal open={allFilesModalOpen} onClose={handleAllFilesModalClose} />
-            <AddFileModal open={addFileModalOpen} onClose={handleAddFileModalClose} />
-            <SearchFileModal open={searchFileModalOpen} onClose={handleSearchFileModalClose} />
-            <SearchCourtModal open={searchCourtModalOpen} onClose={handleSearchCourtModalClose} />
+            <UserFilesModal open={userFilesModalOpen} onClose={handleUserFilesModalClose}/>
+            <AllFilesModal open={allFilesModalOpen} onClose={handleAllFilesModalClose}/>
+            <AllCourtsModal open={allCourtsModalOpen} onClose={handleAllCourtsModalClose}/>
+            <SearchFileModal open={searchFileModalOpen} onClose={handleSearchFileModalClose}/>
+            <SearchCourtModal open={searchCourtModalOpen} onClose={handleSearchCourtModalClose}/>
+            <AddFileModal open={addFileModalOpen} onClose={handleAddFileModalClose}/>
+
         </div>
     );
 };

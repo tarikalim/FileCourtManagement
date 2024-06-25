@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Modal, Box, Typography, TextField, Button } from '@mui/material';
-import { searchFileByFilename } from '../services/api';
 
 const style = {
     position: 'absolute',
@@ -13,20 +12,19 @@ const style = {
     boxShadow: 24,
     p: 4,
 };
-
-const SearchFileModal = ({ open, onClose }) => {
+const CommonSearchModal = ({ open, onClose, title, searchPlaceholder, searchFunction, renderItem }) => {
     const [searchQuery, setSearchQuery] = useState('');
     const [error, setError] = useState('');
-    const [fileData, setFileData] = useState(null);
+    const [results, setResults] = useState(null);
 
     const handleSearch = async () => {
         try {
-            const response = await searchFileByFilename(searchQuery);
-            setFileData(response.data);
+            const response = await searchFunction(searchQuery);
+            setResults(response.data);
             setError('');
         } catch (error) {
-            setError('File not found');
-            setFileData(null);
+            setError(error.response.data.message || 'Not found');
+            setResults(null);
         }
     };
 
@@ -34,15 +32,15 @@ const SearchFileModal = ({ open, onClose }) => {
         <Modal
             open={open}
             onClose={onClose}
-            aria-labelledby="search-file-modal-title"
-            aria-describedby="search-file-modal-description"
+            aria-labelledby="common-search-modal-title"
+            aria-describedby="common-search-modal-description"
         >
             <Box sx={style}>
-                <Typography id="search-file-modal-title" variant="h6" component="h2">
-                    Search File
+                <Typography id="common-search-modal-title" variant="h6" component="h2">
+                    {title}
                 </Typography>
                 <TextField
-                    label="Filename"
+                    label={searchPlaceholder}
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     fullWidth
@@ -56,11 +54,9 @@ const SearchFileModal = ({ open, onClose }) => {
                         {error}
                     </Typography>
                 )}
-                {fileData && (
+                {results && (
                     <Box mt={2}>
-                        <Typography><strong>ID:</strong> {fileData.id}</Typography>
-                        <Typography><strong>Filename:</strong> {fileData.filename}</Typography>
-                        <Typography><strong>Assigned User:</strong> {fileData.assignedUser}</Typography>
+                        {renderItem(results)}
                     </Box>
                 )}
             </Box>
@@ -68,4 +64,4 @@ const SearchFileModal = ({ open, onClose }) => {
     );
 };
 
-export default SearchFileModal;
+export default CommonSearchModal;
