@@ -13,9 +13,9 @@ function Login() {
         e.preventDefault();
         try {
             const response = await login(username, password);
-            console.log('Login response:', response);  // Login yanıtını kontrol edin
-            localStorage.setItem('token', response.data);  // Token'ı kaydet
-            console.log('Token stored:', response.data);  // Token'ın doğru şekilde saklandığını kontrol edin
+            console.log('Login response:', response);
+            localStorage.setItem('token', response.data);
+            console.log('Token stored:', response.data);
             navigate('/home');
         } catch (error) {
             console.error('Login failed', error);
