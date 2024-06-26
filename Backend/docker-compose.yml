@@ -22,6 +22,15 @@ services:
       - "8080:8080"
     depends_on:
       - mysql
+  frontend:
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile
+    container_name: frontend_container
+    ports:
+      - "3000:3000"
+    depends_on:
+      - springboot_app
 
 
 volumes:
