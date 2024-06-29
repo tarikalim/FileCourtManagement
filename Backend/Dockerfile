@@ -10,6 +10,5 @@ RUN ./mvnw package
 FROM openjdk:17
 WORKDIR /Backend
 COPY --from=build target/*.jar Backend.jar
-COPY .env .env
 LABEL authors="Tarik"
 ENTRYPOINT ["java", "-jar", "Backend.jar"]
