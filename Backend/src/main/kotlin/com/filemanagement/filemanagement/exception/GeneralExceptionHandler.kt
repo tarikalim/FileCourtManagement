@@ -49,6 +49,17 @@ class GeneralExceptionHandler : ResponseEntityExceptionHandler() {
         return ResponseEntity(mapOf("message" to exception.message), HttpStatus.NOT_FOUND)
     }
 
+    @ExceptionHandler(NotificationNotFoundException::class)
+    fun handleNotificationNotFoundException(exception: NotificationNotFoundException): ResponseEntity<Map<String, String?>> {
+        return ResponseEntity(mapOf("message" to exception.message), HttpStatus.NOT_FOUND)
+    }
+
+    @ExceptionHandler(SenderNotFoundException::class)
+    fun handleSenderNotFoundException(exception: SenderNotFoundException): ResponseEntity<Map<String, String?>> {
+        return ResponseEntity(mapOf("message" to exception.message), HttpStatus.NOT_FOUND)
+    }
+
+
     @ExceptionHandler(UsernameNotFoundException::class)
     fun handleUsernameNotFoundException(exception: UsernameNotFoundException): ResponseEntity<Map<String, String?>> {
         return ResponseEntity(mapOf("message" to exception.message), HttpStatus.NOT_FOUND)

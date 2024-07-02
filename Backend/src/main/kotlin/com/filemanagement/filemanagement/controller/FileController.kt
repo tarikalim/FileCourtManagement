@@ -1,7 +1,7 @@
 package com.filemanagement.filemanagement.controller
 
-import com.filemanagement.filemanagement.dto.AddFileDTO
-import com.filemanagement.filemanagement.dto.UserFileDTO
+import com.filemanagement.filemanagement.dto.file.AddFileDTO
+import com.filemanagement.filemanagement.dto.file.FileDTO
 import com.filemanagement.filemanagement.service.FileService
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
@@ -17,20 +17,20 @@ class FileController(private val fileService: FileService) {
     fun getAllFiles() = fileService.getAllFiles()
 
     @GetMapping("/{id}")
-    fun getFileById(@PathVariable id: Long): ResponseEntity<UserFileDTO> {
+    fun getFileById(@PathVariable id: Long): ResponseEntity<FileDTO> {
         val file = fileService.getFileById(id)
         return ResponseEntity(file, HttpStatus.OK)
     }
 
     @GetMapping("/search")
-    fun findFileByFilename(@RequestParam filename: String): ResponseEntity<UserFileDTO> {
+    fun findFileByFilename(@RequestParam filename: String): ResponseEntity<FileDTO> {
         val file = fileService.findFileByFilename(filename)
         return ResponseEntity(file, HttpStatus.OK)
     }
 
 
     @PostMapping
-    fun createFile(@Valid @RequestBody addFileDTO: AddFileDTO): ResponseEntity<UserFileDTO> {
+    fun createFile(@Valid @RequestBody addFileDTO: AddFileDTO): ResponseEntity<FileDTO> {
         val file = fileService.createFile(addFileDTO)
         return ResponseEntity(file, HttpStatus.CREATED)
     }

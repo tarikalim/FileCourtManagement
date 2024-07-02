@@ -1,6 +1,6 @@
 package com.filemanagement.filemanagement.controller
 
-import com.filemanagement.filemanagement.dto.AuthDTO
+import com.filemanagement.filemanagement.dto.auth.AuthDTO
 import com.filemanagement.filemanagement.security.CustomUserDetails
 import com.filemanagement.filemanagement.service.JwtService
 import com.filemanagement.filemanagement.service.UserService

@@ -1,4 +1,4 @@
-package com.filemanagement.filemanagement.dto
+package com.filemanagement.filemanagement.dto.auth
 
 data class AuthDTO(
     val username: String,

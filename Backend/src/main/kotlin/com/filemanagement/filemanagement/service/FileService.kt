@@ -1,9 +1,8 @@
 package com.filemanagement.filemanagement.service
 
-import com.filemanagement.filemanagement.dto.AddFileDTO
-import com.filemanagement.filemanagement.dto.FileDTO
-import com.filemanagement.filemanagement.dto.FileMapper
-import com.filemanagement.filemanagement.dto.UserFileDTO
+import com.filemanagement.filemanagement.dto.file.AddFileDTO
+import com.filemanagement.filemanagement.dto.file.FileDTO
+import com.filemanagement.filemanagement.dto.file.FileMapper
 import com.filemanagement.filemanagement.repository.FileRepository
 import org.springframework.stereotype.Service
 import com.filemanagement.filemanagement.exception.FileNotFoundException
@@ -13,21 +12,22 @@ import com.filemanagement.filemanagement.model.File
 class FileService(
     private val fileRepository: FileRepository,
     private val fileMapper: FileMapper,
-    private val userService: UserService
+    private val userService: UserService,
+    private val senderService: SenderService
 ) {
     fun getAllFiles() = fileRepository.findAll().map(fileMapper::toDTO)
     internal fun findFileById(id: Long): File {
         return fileRepository.findById(id).orElseThrow { FileNotFoundException("File not found with id: $id") }
     }
 
-    fun getFileById(id: Long): UserFileDTO {
+    fun getFileById(id: Long): FileDTO {
         val file = findFileById(id)
-        return fileMapper.toUserFileDTO(file)
+        return fileMapper.toDTO(file)
     }
 
     fun getFilesByUserId(userId: Long): List<FileDTO> {
         val user = userService.findUserById(userId)
-        return fileRepository.findByUserId(user.id).map(fileMapper::toBasicDTO)
+        return fileRepository.findByUserId(user.id).map(fileMapper::toDTO)
     }
 
     fun getFilesByUserUsername(username: String): List<FileDTO> {
@@ -43,25 +43,26 @@ class FileService(
         fileRepository.deleteById(id)
     }
 
-    fun createFile(addFileDTO: AddFileDTO): UserFileDTO {
-        if (fileRepository.findByFilename(addFileDTO.filename) != null) {
-            throw IllegalArgumentException("This file already in the system: ${addFileDTO.filename}")
+    fun createFile(addFileDTO: AddFileDTO): FileDTO {
+        if (fileRepository.findByFilenameAndSendername(addFileDTO.filename, addFileDTO.sendername) != null) {
+            throw IllegalArgumentException("This file already exists for the given sender: ${addFileDTO.filename}")
         }
         val availableUsers = userService.getAllAvailableUsers()
         val fileCounts = fileRepository.countFilesByUser()
         val userFileCounts = fileCounts.associate { it[0] as Long to it[1] as Long }
         val userWithLeastFiles = availableUsers.minByOrNull { userFileCounts[it.id] ?: 0L }
             ?: throw IllegalStateException("No users available")
-        val file = fileMapper.fromAddDTO(addFileDTO, userWithLeastFiles)
+        val sender = senderService.findBySendername(addFileDTO.sendername)
+        val file = fileMapper.fromDTO(addFileDTO, userWithLeastFiles, sender)
         val savedFile = fileRepository.save(file)
-        return fileMapper.toUserFileDTO(savedFile)
+        return fileMapper.toDTO(savedFile)
 
     }
 
-    fun findFileByFilename(filename: String): UserFileDTO {
+    fun findFileByFilename(filename: String): FileDTO {
         val file = fileRepository.findByFilename(filename)
             ?: throw FileNotFoundException("File not found with filename: $filename")
-        return fileMapper.toUserFileDTO(file)
+        return fileMapper.toDTO(file)
     }
 
 

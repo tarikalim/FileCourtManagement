@@ -32,9 +32,13 @@ class SecurityConfig(
             .csrf { it.disable() }
             .authorizeHttpRequests {
                 it.requestMatchers("/auth/**").permitAll()
+                    .requestMatchers("/notifications/**").permitAll()
                     .requestMatchers("/swagger-ui/index.html/**").permitAll()
                     .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                     .requestMatchers(HttpMethod.POST, "/files/**").hasAuthority("ROLE_VACATION")
+                    .requestMatchers(HttpMethod.POST, "/users").permitAll()
+                    .requestMatchers("/senders/**").permitAll()
+
                     .anyRequest().authenticated()
             }
             .sessionManagement {

@@ -1,4 +1,4 @@
-package com.filemanagement.filemanagement.dto
+package com.filemanagement.filemanagement.dto.user
 
 import com.filemanagement.filemanagement.model.Role
 import jakarta.validation.constraints.NotBlank

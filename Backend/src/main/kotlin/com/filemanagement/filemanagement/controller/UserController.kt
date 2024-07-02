@@ -1,8 +1,8 @@
 package com.filemanagement.filemanagement.controller
 
-import com.filemanagement.filemanagement.dto.CreateUserDTO
-import com.filemanagement.filemanagement.dto.FileDTO
-import com.filemanagement.filemanagement.dto.UserDTO
+import com.filemanagement.filemanagement.dto.user.CreateUserDTO
+import com.filemanagement.filemanagement.dto.file.FileDTO
+import com.filemanagement.filemanagement.dto.user.UserDTO
 import com.filemanagement.filemanagement.security.CustomUserDetails
 import com.filemanagement.filemanagement.service.FileService
 import com.filemanagement.filemanagement.service.UserService
@@ -40,6 +40,7 @@ class UserController(
         val files = fileService.getFilesByUserId(id)
         return ResponseEntity(files, HttpStatus.OK)
     }
+
     @GetMapping("/files/search")
     fun getFilesByUserUsername(@RequestParam username: String): ResponseEntity<List<FileDTO>> {
         val files = fileService.getFilesByUserUsername(username)

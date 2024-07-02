@@ -1,8 +1,8 @@
 package com.filemanagement.filemanagement.service
 
-import com.filemanagement.filemanagement.dto.CreateUserDTO
-import com.filemanagement.filemanagement.dto.UserDTO
-import com.filemanagement.filemanagement.dto.UserMapper
+import com.filemanagement.filemanagement.dto.user.CreateUserDTO
+import com.filemanagement.filemanagement.dto.user.UserDTO
+import com.filemanagement.filemanagement.dto.user.UserMapper
 import com.filemanagement.filemanagement.exception.UserNotFoundException
 import com.filemanagement.filemanagement.model.Role
 import com.filemanagement.filemanagement.model.User
