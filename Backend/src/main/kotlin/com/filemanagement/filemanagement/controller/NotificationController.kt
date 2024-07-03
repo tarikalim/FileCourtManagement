@@ -6,6 +6,7 @@ import com.filemanagement.filemanagement.security.CustomUserDetails
 import com.filemanagement.filemanagement.service.NotificationService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.*
 
@@ -25,6 +26,13 @@ class NotificationController(
         return ResponseEntity.ok(notification)
     }
 
+    @GetMapping("/me")
+    fun getCurrentUserNotifications(@AuthenticationPrincipal userDetails: CustomUserDetails): ResponseEntity<List<NotificationDTO>> {
+        val notifications = notificationService.getNotificationsByUsername(userDetails.username)
+        return ResponseEntity(notifications, HttpStatus.OK)
+    }
+
+
     @PostMapping
     fun createNotification(
         @AuthenticationPrincipal userDetails: CustomUserDetails,
@@ -34,5 +42,14 @@ class NotificationController(
         val notification = notificationService.createNotification(senderName, createNotificationDTO)
         return ResponseEntity(notification, HttpStatus.CREATED)
     }
+
+    @PutMapping("/{id}")
+    @PreAuthorize("#notificationService.isOwner(#id, principal.username)")
+    fun updateNotification(@PathVariable id: Long): ResponseEntity<NotificationDTO> {
+        val updatedNotification = notificationService.markNotificationAsRead(id)
+        return ResponseEntity(updatedNotification, HttpStatus.OK)
+
+    }
+
 
 }
