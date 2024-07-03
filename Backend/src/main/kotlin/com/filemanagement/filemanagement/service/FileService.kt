@@ -45,7 +45,7 @@ class FileService(
 
     fun createFile(addFileDTO: AddFileDTO): FileDTO {
         if (fileRepository.findByFilenameAndSender_Sendername(addFileDTO.filename, addFileDTO.sendername) != null) {
-            throw IllegalArgumentException("This file already exists for the given sender: ${addFileDTO.filename}")
+            throw IllegalArgumentException("This file already exists: ${addFileDTO.filename}")
         }
         val availableUsers = userService.getAllAvailableUsers()
         val fileCounts = fileRepository.countFilesByUser()

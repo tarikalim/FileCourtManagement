@@ -44,11 +44,13 @@ class NotificationController(
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("#notificationService.isOwner(#id, principal.username)")
-    fun updateNotification(@PathVariable id: Long): ResponseEntity<NotificationDTO> {
+    @PreAuthorize("@notificationService.isOwner(#id, #userDetails.username)")
+    fun updateNotification(
+        @PathVariable id: Long,
+        @AuthenticationPrincipal userDetails: CustomUserDetails
+    ): ResponseEntity<NotificationDTO> {
         val updatedNotification = notificationService.markNotificationAsRead(id)
         return ResponseEntity(updatedNotification, HttpStatus.OK)
-
     }
 
 
