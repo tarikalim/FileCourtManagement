@@ -15,7 +15,7 @@ class UserMapper {
         )
     }
 
-    fun fromCreateDTO(dto: CreateUserDTO): User {
+    fun toEntity(dto: CreateUserDTO): User {
         return User(
             username = dto.username,
             password = dto.password,

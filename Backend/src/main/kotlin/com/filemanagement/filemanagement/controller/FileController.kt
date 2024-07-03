@@ -23,8 +23,11 @@ class FileController(private val fileService: FileService) {
     }
 
     @GetMapping("/search")
-    fun findFileByFilename(@RequestParam filename: String): ResponseEntity<FileDTO> {
-        val file = fileService.findFileByFilename(filename)
+    fun findFileByFilenameAndSendername(
+        @RequestParam filename: String,
+        @RequestParam sendername: String
+    ): ResponseEntity<FileDTO> {
+        val file = fileService.findFileByFilenameAndSendername(filename, sendername)
         return ResponseEntity(file, HttpStatus.OK)
     }
 

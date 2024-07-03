@@ -67,7 +67,7 @@ class UserService(
         if (findUserByRole(Role.VACATION).isNotEmpty() && createUserDTO.role == Role.VACATION) {
             throw IllegalArgumentException("There is already a user on vacation")
         }
-        val user = userMapper.fromCreateDTO(createUserDTO)
+        val user = userMapper.toEntity(createUserDTO)
         user.password = bCryptPasswordEncoder.encode(user.password)
         val savedUser = userRepository.save(user)
         return userMapper.toDTO(savedUser)

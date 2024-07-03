@@ -20,9 +20,9 @@ class SenderService(
 
     fun createSender(addSenderDTO: AddSenderDTO): SenderDTO {
         if (senderRepository.findBySendername(addSenderDTO.sendername) != null) {
-            throw IllegalArgumentException("Sender already exists: ${addSenderDTO.sendername}")
+            throw IllegalArgumentException("Sender already exists with name: ${addSenderDTO.sendername}")
         }
-        val sender = senderMapper.fromDTO(addSenderDTO)
+        val sender = senderMapper.toEntity(addSenderDTO)
         val savedSender = senderRepository.save(sender)
         return senderMapper.toDTO(savedSender)
     }
@@ -30,5 +30,6 @@ class SenderService(
     fun getAllSenders(): List<SenderDTO> {
         return senderRepository.findAll().map { senderMapper.toDTO(it) }
     }
+
 
 }

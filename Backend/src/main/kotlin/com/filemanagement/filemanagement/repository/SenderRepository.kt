@@ -5,4 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface SenderRepository : JpaRepository<Sender, Long> {
     fun findBySendername(sendername: String): Sender?
+
 }

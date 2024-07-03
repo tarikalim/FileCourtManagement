@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component
 @Component
 class FileMapper {
 
-    // Entity to DTO
     fun toDTO(file: File): FileDTO {
         return FileDTO(
             id = file.id,
@@ -19,8 +18,7 @@ class FileMapper {
         )
     }
 
-    // DTO to Entity
-    fun fromDTO(dto: AddFileDTO, user: User, sender: Sender): File {
+    fun toEntity(dto: AddFileDTO, user: User, sender: Sender): File {
         return File(
             filename = dto.filename,
             user = user,

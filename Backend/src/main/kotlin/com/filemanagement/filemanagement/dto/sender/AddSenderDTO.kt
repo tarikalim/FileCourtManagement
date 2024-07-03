@@ -1,5 +1,7 @@
 package com.filemanagement.filemanagement.dto.sender
+import jakarta.validation.constraints.NotBlank
 
 data class AddSenderDTO(
-    val sendername: String
+    @NotBlank
+    val sendername: String,
 )

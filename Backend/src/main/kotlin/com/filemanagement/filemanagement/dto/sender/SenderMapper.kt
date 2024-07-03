@@ -9,13 +9,14 @@ class SenderMapper {
     fun toDTO(sender: Sender): SenderDTO {
         return SenderDTO(
             id = sender.id,
-            sendername = sender.sendername
+            sendername = sender.sendername,
         )
     }
 
-    fun fromDTO(dto: AddSenderDTO): Sender {
+    fun toEntity(dto: AddSenderDTO): Sender {
         return Sender(
             sendername = dto.sendername
+
         )
     }
 }

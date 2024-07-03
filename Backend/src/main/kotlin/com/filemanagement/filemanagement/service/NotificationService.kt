@@ -49,5 +49,10 @@ class NotificationService(
         return notificationMapper.toDTO(notification)
 
     }
+// function to check whoever making a change over notification is the owner of that notification
+    fun isOwner(notificationId: Long, username: String): Boolean {
+        val notification = findNotificationById(notificationId)
+        return notification.receiver.username == username
+    }
 
 }
