@@ -14,6 +14,6 @@ data class File(
     val user: User,
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "sendername")
+    @JoinColumn(name = "sender_id")
     val sender: Sender
 )

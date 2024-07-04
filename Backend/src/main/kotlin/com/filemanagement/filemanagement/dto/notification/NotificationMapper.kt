@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component
 @Component
 class NotificationMapper {
 
-    fun toEntity(createNotificationDTO: CreateNotificationDTO, sender: User, receiver: User): Notification {
+    fun toEntity(createNotificationDTO: CreateNotificationDTO, sender: User?, receiver: User): Notification {
         return Notification(
             sender = sender,
             receiver = receiver,

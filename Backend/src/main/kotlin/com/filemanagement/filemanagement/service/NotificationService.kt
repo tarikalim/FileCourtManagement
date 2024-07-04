@@ -35,7 +35,7 @@ class NotificationService(
     }
 
     fun createNotification(senderName: String, createNotificationDTO: CreateNotificationDTO): NotificationDTO {
-        val sender = userService.findUserByUsername(senderName)
+        val sender = if (senderName == "system") null else userService.findUserByUsername(senderName)
         val receiver = userService.findUserByUsername(createNotificationDTO.receiverName)
         val notification = notificationMapper.toEntity(createNotificationDTO, sender, receiver)
         val savedNotification = notificationRepository.save(notification)
