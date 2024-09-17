@@ -1,96 +1,82 @@
 # File-Court Management Application for Bakirkoy Courthouse
 
-This application was developed upon the request of the Bakirkoy Courthouse Commission to ensure the 
-automatic distribution of files assigned by the court on duty to the other courts.
+The File-Court Management Application 
+for Bakirkoy Courthouse automates the distribution
+of case files among 24 Heavy Penal Courts. 
+Each week, one court is designated as the on-duty court, 
+with the authority to input case files into the system. 
+Once a case file is entered by the on-duty court, 
+the application ensures that the files are evenly distributed across all courts, 
+maintaining an equal workload. 
+The duty court rotates automatically every week, 
+and each court has the ability to view and process the cases assigned to them. 
+This system replaces the previous manual process, 
+streamlining operations by requiring only file input from the courts, 
+while the assignment process is handled by the application.
+
+## Technologies Used
+
+- **Spring Boot**: Used for building the backend services and APIs of the application, ensuring high performance and reliability.
+- **MySQL**: The relational database used to store and manage case files and court data.
+- **Spring Security**: Implements role-based access control, ensuring that only the designated on-duty court can input new case files. It also manages authentication via JWT tokens to secure the application.
+- **React**: Utilized for the frontend, providing an interactive user interface where courts can view and manage their assigned case files.
+
+
+## Prerequisites
+
+To run this application, you will need to have the following software installed:
+
+- [Docker Desktop](https://www.docker.com/products/docker-desktop) - Required to build and run the application using Docker.
+
+## Installation
+
+1. Clone the repository:
+    ```bash
+    git clone https://github.com/tarikalim/FileCourtManagement.git
+    ```
+
+2. Navigate to the project directory:
+    ```bash
+    cd file-court-management
+    ```
+
+3. Set the environment variables for MySQL credentials (for Windows PowerShell):
+    ```bash
+    $env:MYSQL_ROOT_PASSWORD="<give any password for mysql container>"
+    $env:MYSQL_DATABASE="filemanagement"
+    ```
+
+   For Linux/macOS, use the following commands:
+    ```bash
+    export MYSQL_ROOT_PASSWORD="<give any password for mysql container>"
+    export MYSQL_DATABASE="filemanagement"
+    ```
+
+4. Create a `secrets.properties` file in `backend/src/main/resources` and provide the following configuration:
+    ```properties
+    spring.datasource.url=jdbc:mysql://mysql:3306/${MYSQL_DATABASE}
+    spring.datasource.username=${MYSQL_USER}
+    spring.datasource.password=${MYSQL_PASSWORD}
+    secret.key=your-secret-key
+    cors.allowed.origin=http://localhost:3000
+    ```
+
+5. Make sure you have Docker and Docker Compose installed.
+
+6. Run the application using Docker Compose:
+    ```bash
+    docker-compose up --build
+    ```
+
+7. The backend will be accessible at `http://localhost:8080` and the frontend at `http://localhost:3000`.
+
+
+## Port Conflicts
+
+If you encounter port conflicts, 
+ensure that ports 3306 (MySQL), 8080 (Backend), and 3000 (Frontend)
+are not already in use by other applications. 
+You can modify the docker-compose.yml file to change the port mappings if needed.
 
 
 
-Initially appeared on
-[gist](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2). But the page cannot open anymore so that is why I have moved it here.
-
-## Getting Started
-
-These instructions will give you a copy of the project up and running on
-your local machine for development and testing purposes. See deployment
-for notes on deploying the project on a live system.
-
-### Prerequisites
-
-Requirements for the software and other tools to build, test and push
-- [Example 1](https://www.example.com)
-- [Example 2](https://www.example.com)
-
-### Installing
-
-A step by step series of examples that tell you how to get a development
-environment running
-
-Say what the step will be
-
-    Give the example
-
-And repeat
-
-    until finished
-
-End with an example of getting some data out of the system or using it
-for a little demo
-
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-### Sample Tests
-
-Explain what these tests test and why
-
-    Give an example
-
-### Style test
-
-Checks if the best practices and the right coding style has been used.
-
-    Give an example
-
-## Deployment
-
-Add additional notes to deploy this on a live system
-
-## Built With
-
-- [Contributor Covenant](https://www.contributor-covenant.org/) - Used
-  for the Code of Conduct
-- [Creative Commons](https://creativecommons.org/) - Used to choose
-  the license
-
-## Contributing
-
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code
-of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [Semantic Versioning](http://semver.org/) for versioning. For the versions
-available, see the [tags on this
-repository](https://github.com/PurpleBooth/a-good-readme-template/tags).
-
-## Authors
-
-- **Billie Thompson** - *Provided README Template* -
-  [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of
-[contributors](https://github.com/PurpleBooth/a-good-readme-template/contributors)
-who participated in this project.
-
-## License
-
-This project is licensed under the [CC0 1.0 Universal](LICENSE.md)
-Creative Commons License - see the [LICENSE.md](LICENSE.md) file for
-details
-
-## Acknowledgments
-
-- Hat tip to anyone whose code is used
-- Inspiration
-- etc
