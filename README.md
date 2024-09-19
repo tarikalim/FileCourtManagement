@@ -37,7 +37,7 @@ To run this application, you will need to have the following software installed:
 
 2. Navigate to the project directory:
     ```bash
-    cd file-court-management
+    cd FileCourtManagement
     ```
 
 3. Set the environment variables for MySQL credentials (for Windows PowerShell):
