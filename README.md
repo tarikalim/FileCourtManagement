@@ -13,10 +13,12 @@ and each court has the ability to view and process the cases assigned to them.
 This system replaces the previous manual process, 
 streamlining operations by requiring only file input from the courts, 
 while the assignment process is handled by the application.
+The application also has a communication and messaging system within itself. 
+Notifications can be sent to the courts for new assignments and messaging can be provided between the courts.
 
 ## Technologies Used
 
-- **Spring Boot**: Used for building the backend services and APIs of the application, ensuring high performance and reliability.
+- **Spring Boot**: Used for building the backend services and APIs of the application.
 - **MySQL**: The relational database used to store and manage case files and court data.
 - **Spring Security**: Implements role-based access control, ensuring that only the designated on-duty court can input new case files. It also manages authentication via JWT tokens to secure the application.
 - **React**: Utilized for the frontend, providing an interactive user interface where courts can view and manage their assigned case files.
@@ -61,14 +63,13 @@ To run this application, you will need to have the following software installed:
     cors.allowed.origin=http://localhost:3000
     ```
 
-5. Make sure you have Docker and Docker Compose installed.
 
-6. Run the application using Docker Compose:
+5. Run the application using Docker Compose:
     ```bash
     docker-compose up --build
     ```
 
-7. The backend will be accessible at `http://localhost:8080` and the frontend at `http://localhost:3000`.
+6. The backend will be accessible at `http://localhost:8080` and the frontend at `http://localhost:3000`.
 
 
 ## Port Conflicts
