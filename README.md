@@ -37,31 +37,22 @@ To run this application, you will need to have the following software installed:
 
 2. Navigate to the project directory:
     ```bash
-    cd file-court-management
+    cd FileCourtManagement
     ```
 
-3. Set the environment variables for MySQL credentials (for Windows PowerShell):
-    ```bash
-    $env:MYSQL_ROOT_PASSWORD="<give any password for mysql container>"
-    $env:MYSQL_DATABASE="filemanagement"
-    ```
+3. Set the environment variables for MySQL credentials in docker-compose.yml file :
 
-   For Linux/macOS, use the following commands:
-    ```bash
-    export MYSQL_ROOT_PASSWORD="<give any password for mysql container>"
-    export MYSQL_DATABASE="filemanagement"
-    ```
 
 4. Create a `secrets.properties` file in `backend/src/main/resources` and provide the following configuration:
     ```properties
-    spring.datasource.url=jdbc:mysql://mysql:3306/${MYSQL_DATABASE}
-    spring.datasource.username=${MYSQL_USER}
-    spring.datasource.password=${MYSQL_PASSWORD}
+    spring.datasource.url=jdbc:mysql://mysql:3306/filemanagement
+    spring.datasource.username=root
+    spring.datasource.password=give your docker-compose.yml MYSQL_ROOT_PASSWORD here too
     secret.key=your-secret-key
     cors.allowed.origin=http://localhost:3000
     ```
-
 5. Make sure you have Docker and Docker Compose installed.
+
 
 6. Run the application using Docker Compose:
     ```bash
@@ -71,6 +62,11 @@ To run this application, you will need to have the following software installed:
 7. The backend will be accessible at `http://localhost:8080` and the frontend at `http://localhost:3000`.
 
 
+8.  You may need to give execute permission for "mvnw" file located in Backend directory:
+      ```bash
+      cd Backend/
+      chmod +x mvnw
+      ```
 ## Port Conflicts
 
 If you encounter port conflicts, 
